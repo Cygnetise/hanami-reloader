@@ -14,7 +14,9 @@ module Hanami
 
           files.touch(path)
           files.append path, <<~CODE
-            command = "pumactl --control-url 'tcp://localhost:9293' --control-token foobar restart"
+            url = ENV.fetch('CONTROL_URL')
+            token = ENV.fetch('CONTROL_TOKEN')
+            command = "curl #{host}/restart?token=#{token}"
             guard 'process', :name => 'reloader', :command => command do
               watch(%r{config/*})
               watch(%r{lib/*})
@@ -38,7 +40,7 @@ CODE
       class Reloader < Hanami::CLI::Commands::Command
         desc "Starts code reloading (only development) reloader"
         option :control_token, default: "foobar", desc: "The control token you would like puma to start with"
-        option :control_url, default: "tcp://localhost:9293", desc: "The control url you would like puma to start with"
+        option :control_url, default: "http://localhost:9293", desc: "The control url you would like puma to start with"
 
         def call(**options)
           exec "CONTROL_TOKEN=#{options.fetch(:control_token)} CONTROL_URL=#{options.fetch(:control_url)} bundle exec guard -n f -i -G .hanami.server.guardfile"
