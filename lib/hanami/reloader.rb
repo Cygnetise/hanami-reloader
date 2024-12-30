@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require "hanami/cli/commands"
-require "hanami/utils"
+require "hanami/cyg_cli/commands"
+require "hanami/cyg_utils"
 
 module Hanami
-  module Utils # rubocop:disable Style/Documentation
+  module CygUtils # rubocop:disable Style/Documentation
     # Monkey-patch `Hanami::Utils.reload!` to disable Ruby based code-reloading
     def self.reload!(directory)
       require!(directory)

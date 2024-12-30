@@ -4,7 +4,7 @@ module Hanami
   module Reloader
     module CLI
       # Generate hanami-reloader configuration
-      class Generate < Hanami::CLI::Commands::Command
+      class Generate < Hanami::CygCLI::Commands::Command
         requires "environment"
 
         desc "Generate configuration for code reloading"
@@ -27,7 +27,7 @@ CODE
       end
 
       # Override `hanami server` command
-      class Server < Hanami::CLI::Commands::Command
+      class Server < Hanami::CygCLI::Commands::Command
         desc "Starts the puma server with control token and url (only development)"
         option :control_token, default: "foobar", desc: "The control token you would like puma to start with"
         option :control_url, default: "tcp://localhost:9293", desc: "The control url you would like puma to start with"
@@ -37,7 +37,7 @@ CODE
         end
       end
 
-      class Reloader < Hanami::CLI::Commands::Command
+      class Reloader < Hanami::CygCLI::Commands::Command
         desc "Starts code reloading (only development) reloader"
         option :control_token, default: "foobar", desc: "The control token you would like puma to start with"
         option :control_url, default: "http://localhost:9293", desc: "The control url you would like puma to start with"
@@ -50,6 +50,6 @@ CODE
   end
 end
 
-Hanami::CLI.register "generate reloader", Hanami::Reloader::CLI::Generate
-Hanami::CLI.register "server",            Hanami::Reloader::CLI::Server
-Hanami::CLI.register "reloader",          Hanami::Reloader::CLI::Reloader
+Hanami::CygCLI.register "generate reloader", Hanami::Reloader::CLI::Generate
+Hanami::CygCLI.register "server",            Hanami::Reloader::CLI::Server
+Hanami::CygCLI.register "reloader",          Hanami::Reloader::CLI::Reloader
